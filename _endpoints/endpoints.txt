@@ -1,0 +1,21 @@
+
+****************************************************
+*****************END POINTS*************************
+****************************************************
+
+Q1
+--
+mapper: http://127.0.0.1:8080/function/taximapq1
+reducer: http://127.0.0.1:8080/function/taxireduceq1
+
+Q2
+--
+mapper: http://127.0.0.1:8080/function/taximapq2
+reducer: http://127.0.0.1:8080/function/taxireduceq2
+
+Q3
+--
+mapper: http://127.0.0.1:8080/function/taximapq3
+reducer: http://127.0.0.1:8080/function/taxireduceq3
+
+****************************************************

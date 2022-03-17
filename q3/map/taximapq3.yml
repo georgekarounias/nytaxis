@@ -1,0 +1,13 @@
+version: 1.0
+provider:
+  name: openfaas
+  gateway: http://127.0.0.1:8080
+functions:
+  taximapq3:
+    lang: python3-debian
+    handler: ./taximapq3
+    image: taximapq3:latest
+
+ environment:
+ bucketinput: "commoninput"
+ bucketoutput: "map3output"

@@ -1,0 +1,10 @@
+version: 1.0
+provider:
+  name: openfaas
+  gateway: http://127.0.0.1:8080
+functions:
+  taxiq3:
+    lang: python3-debian
+    handler: ./taxiq3
+    image: taxiq3:latest
+
