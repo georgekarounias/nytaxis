@@ -7,7 +7,6 @@ functions:
     lang: python3-debian
     handler: ./taxireduceq3
     image: taxireduceq3:latest
-
- environment:
- bucketinput: "map3output"
- bucketoutput: "result3"
+    environment:
+      bucketinput: "map3output"
+      bucketoutput: "result3"

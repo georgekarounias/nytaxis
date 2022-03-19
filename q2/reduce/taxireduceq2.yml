@@ -7,7 +7,6 @@ functions:
     lang: python3-debian
     handler: ./taxireduceq2
     image: taxireduceq2:latest
-
     environment:
       bucketinput: "map2output"
       bucketoutput: "result2"
