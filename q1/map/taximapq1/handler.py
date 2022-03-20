@@ -1,3 +1,4 @@
+from asyncore import write
 from fileinput import filename
 from minio import Minio
 from minio.error import S3Error
@@ -31,7 +32,7 @@ def ProcessData(data):
     objects = []
     for i in data:
         area = GetArea(i['pickup_longitude'], i['pickup_latitude'])
-        dictionary ={"Id" : i['id'], "Area" : area}
+        dictionary ={'Id': i['id'], 'Area': area}
         objects.append(dictionary)
     
     # Serializing json 
@@ -39,11 +40,11 @@ def ProcessData(data):
     WriteToBucket(json_object, OUTBUCKETNAME)
 
 def GetArea(longitude, latitude):
-    if longitude > '-73.935242' and latitude > '40.730610':
+    if float(longitude) > float('-73.935242') and float(latitude) > float('40.730610'):
         return 1
-    elif longitude > '-73.935242' and latitude < '40.730610':
+    elif float(longitude) > float('-73.935242') and float('40.730610'):
         return 2
-    elif  longitude < '-73.935242' and latitude > '40.730610':
+    elif  float(longitude) < float('-73.935242') and float('40.730610'):
         return 3
     else:
         return 4
@@ -51,13 +52,16 @@ def GetArea(longitude, latitude):
 def WriteToBucket(jsobj, bucketname):
     outputfilename = str(uuid.uuid4())+".json"
     write_json(jsobj, "/tmp/" + outputfilename)
+    print(jsobj)
     mc.fput_object(bucketname, outputfilename, "/tmp/" + outputfilename)
     os.remove("/tmp/" + outputfilename)
     return
 
 def write_json(obj, filename):
-    with open(filename, 'w', encoding='utf-8') as jsonf: 
-        json.dump(obj, jsonf) 
+    f = open(filename, 'w')
+    f.write(obj)
+    f.close()
+        
 
 def handle(req):
     req_dict = json.loads(req)
@@ -66,4 +70,4 @@ def handle(req):
     data = GetDataFromBucketFile(minioBucketName, minioFileName)
     ProcessData(data)
 
-    return req
+    #return req
