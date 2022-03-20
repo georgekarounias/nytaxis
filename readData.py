@@ -30,7 +30,6 @@ def csv_to_json(csvFilePath, jsonFilePath):
         filename_index = 0
     
         for row in csvReader:
-            print(row)
             jsonArray.append(row)
             if len(jsonArray) >= JSON_ENTRIES_THRESHOLD:
                 # if we reached the treshold, write out
