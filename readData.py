@@ -5,6 +5,7 @@ import json
 import os
 import socket
 
+BUCKETNAME = "commoninput"
 JSON_ENTRIES_THRESHOLD = 3 # modify to whatever you see suitable
 def SetMC():
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -34,14 +35,14 @@ def csv_to_json(csvFilePath, jsonFilePath):
             if len(jsonArray) >= JSON_ENTRIES_THRESHOLD:
                 # if we reached the treshold, write out
                 write_json(jsonArray, f"{jsonFilePath}-{filename_index}.json")
-                mc.fput_object("nytaxisinput", f"output-{filename_index}.json", f"{jsonFilePath}-{filename_index}.json")
+                mc.fput_object(BUCKETNAME, f"output-{filename_index}.json", f"{jsonFilePath}-{filename_index}.json")
                 filename_index += 1
                 jsonArray = []
         
         
         # Finally, write out the remainder
         write_json(jsonArray, f"{jsonFilePath}-{filename_index}.json")
-        mc.fput_object("nytaxisinput", f"output-{filename_index}.json", f"{jsonFilePath}-{filename_index}.json")
+        mc.fput_object(BUCKETNAME, f"output-{filename_index}.json", f"{jsonFilePath}-{filename_index}.json")
 
 
 csv_to_json('./_data/sampleData.csv', './_data/output')
