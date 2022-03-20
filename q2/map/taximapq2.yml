@@ -7,7 +7,6 @@ functions:
     lang: python3-debian
     handler: ./taximapq2
     image: taximapq2:latest
-
     environment:
       bucketinput: "commoninput"
       bucketoutput: "map2output"
