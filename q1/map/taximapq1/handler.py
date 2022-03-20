@@ -28,7 +28,7 @@ def GetDataFromBucketFile(minioBucketName, minioFileName):
         data = json.load(json_file)
     return data
 
-def ProcessData(data):
+def ProcessData(data, minioFileName):
     objects = []
     for i in data:
         area = GetArea(i['pickup_longitude'], i['pickup_latitude'])
@@ -37,7 +37,7 @@ def ProcessData(data):
     
     # Serializing json 
     json_object = json.dumps(objects)
-    WriteToBucket(json_object, OUTBUCKETNAME)
+    WriteToBucket(json_object, OUTBUCKETNAME, minioFileName)
 
 def GetArea(longitude, latitude):
     if float(longitude) > float('-73.935242') and float(latitude) > float('40.730610'):
@@ -49,8 +49,8 @@ def GetArea(longitude, latitude):
     else:
         return 4
 
-def WriteToBucket(jsobj, bucketname):
-    outputfilename = str(uuid.uuid4())+".json"
+def WriteToBucket(jsobj, bucketname, minioFileName):
+    outputfilename = minioFileName
     write_json(jsobj, "/tmp/" + outputfilename)
     print(jsobj)
     mc.fput_object(bucketname, outputfilename, "/tmp/" + outputfilename)
@@ -68,6 +68,6 @@ def handle(req):
     minioBucketName, minioFileName = GetMinioInfos(req_dict)
 
     data = GetDataFromBucketFile(minioBucketName, minioFileName)
-    ProcessData(data)
+    ProcessData(data, minioFileName)
 
     #return req
