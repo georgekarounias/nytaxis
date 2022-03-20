@@ -3,6 +3,8 @@ from minio import Minio
 import socket
 import uuid
 
+BUCKETNAME = "testbucket"
+
 def SetMC():
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     s.connect(("8.8.8.8", 80))
@@ -54,6 +56,6 @@ def handle(req):
     #         tripsMettingReqs.append(trip)
     # WriteToBucket(trips, mc, "testbucket") 
     print("Trying write to bucket")
-    WriteToBucket(req, mc, "testbucket") 
+    WriteToBucket(req, mc, BUCKETNAME) 
     print("Wrote to bucket")
     return req
