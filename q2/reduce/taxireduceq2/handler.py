@@ -8,7 +8,7 @@ import json
 import os
 
 BUCKETNAME = "result2"
-LOCAL_IP = "192.168.42.230"
+LOCAL_IP = "192.168.2.11"
 
 def SetMC():
     ipaddress = LOCAL_IP
@@ -37,10 +37,10 @@ def WriteToBucket(jsobj, bucketname, minioFileName, mc):
     mc.fput_object(bucketname, outputfilename, "/tmp/" + outputfilename)
     os.remove("/tmp/" + outputfilename)
 
-def ProcessData(data, minioFileName):
+def ProcessData(data, minioFileName, mc):
     obj = [{'count': len(data)}]
     json_object = json.dumps(obj)
-    WriteToBucket(json_object, BUCKETNAME, minioFileName)
+    WriteToBucket(json_object, BUCKETNAME, minioFileName, mc)
 
 def GetDataFromBucketFile(minioBucketName, minioFileName, mc):
     mc.fget_object(minioBucketName, minioFileName, "/tmp/" + minioFileName)
@@ -55,5 +55,5 @@ def handle(req):
     minioFileName=ReqFileName(reqJson)
     mc = SetMC()
     data = GetDataFromBucketFile(minioBucketName, minioFileName, mc)
-    ProcessData(data, minioFileName)
+    ProcessData(data, minioFileName, mc)
     return req
