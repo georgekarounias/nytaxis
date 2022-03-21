@@ -9,7 +9,7 @@ import os
 import geopy.distance
 
 BUCKETNAME = "testbucket"
-LOCAL_IP = "192.168.2.11"
+LOCAL_IP = "192.168.42.230"
        
 
 def SetMC():
@@ -31,8 +31,9 @@ def GetTrips(inputBucket, file, mc):
     return data
 
 def write_json(obj, filename):
-    with open(filename, 'w', encoding='utf-8') as jsonf: 
-        jsonf.write(obj) 
+    f = open(filename, 'w')
+    f.write(obj)
+    f.close()
 
 def ReqFileName(req_dict):
     keyStrArray = req_dict['Key'].split('/')
@@ -58,7 +59,7 @@ def GetPassengers(trip):
     return int(trip['passenger_count'])
 
 def DoesTripMeetingRequirements(distance, duration, passengers):
-    if(distance > 1 and duration > 600 and passengers > 2):
+    if(distance > 1.000 and duration > 600 and passengers > 2):
         return True
     return False
 
@@ -76,5 +77,6 @@ def handle(req):
         doesTripMeetingRequirements = DoesTripMeetingRequirements(distance, duration, passengers)
         if(doesTripMeetingRequirements == True):
             tripsMettingReqs.append(trip)
-    WriteToBucket(jsonReq, tripsMettingReqs, mc, BUCKETNAME) 
+    json_object = json.dumps(tripsMettingReqs)
+    WriteToBucket(jsonReq, json_object, mc, BUCKETNAME) 
     return req
