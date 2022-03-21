@@ -8,7 +8,7 @@ import json
 import os
 import geopy.distance
 
-BUCKETNAME = "testbucket"
+BUCKETNAME = "map2output"
 LOCAL_IP = "192.168.42.230"
        
 
