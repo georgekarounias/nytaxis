@@ -1,9 +1,6 @@
-dowload mrjob from https://pypi.org/project/mrjob/#files
-run >python3 setup.py test && python3 setup.py install
+we use minio python3 package in our functions requirments.txt
 
-//not used
-download termtools from https://pypi.org/project/termtools/#files
-run >sudo python3 setup.py install
-
-
-python3 py-test.py <data.json
+1. Create buckets (manually)
+2. Create Functions
+3. Create Webhooks (with script ./create-webhooks.sh)
+4. Build-Deploy functions (with script ./run.sh)
