@@ -1,7 +1,74 @@
+from pickle import GLOBAL
+from minio import Minio
+from minio.error import S3Error
+import json
+import os
+
+OUTBUCKETNAME = 'result1'
+countArea1 = 0
+countArea2 = 0
+countArea3 = 0
+countArea4 = 0
+
+def SetMC():
+    mc = Minio("192.168.1.11:9000",
+        access_key='minioadmin',
+        secret_key='minioadmin',
+        secure=False)
+    return mc
+
+mc = SetMC()
+
+def GetMinioInfos(req_dict):
+    keyStrArray = req_dict['Key'].split('/')
+    return keyStrArray[0], keyStrArray[1]
+
+def GetDataFromBucketFile(minioBucketName, minioFileName):
+    mc.fget_object(minioBucketName, minioFileName, "/tmp/" + minioFileName)
+    with open("/tmp/" + minioFileName) as json_file:
+        data = json.load(json_file)
+    return data
+
+def ProcessData(data, minioFileName):
+    for i in data:
+        UpdateAreaCounter(i['Area'])
+    
+    objects = [{'Area1': countArea1},{'Area2': countArea2},{'Area3': countArea3},{'Area4': countArea4}]
+    
+    # Serializing json 
+    json_object = json.dumps(objects)
+    WriteToBucket(json_object, OUTBUCKETNAME, minioFileName)
+
+def UpdateAreaCounter(area):
+    if area == 1:
+        global countArea1
+        countArea1 = countArea1 + 1
+    if area == 2:
+        global countArea2
+        countArea2 = countArea2 + 1
+    if area == 3:
+        global countArea3
+        countArea3 = countArea3 + 1
+    else:
+        global countArea4
+        countArea4 = countArea4 + 1
+
+def WriteToBucket(jsobj, bucketname, minioFileName):
+    outputfilename = minioFileName
+    write_json(jsobj, "/tmp/" + outputfilename)
+    mc.fput_object(bucketname, outputfilename, "/tmp/" + outputfilename)
+    os.remove("/tmp/" + outputfilename)
+    
+def write_json(obj, filename):
+    f = open(filename, 'w')
+    f.write(obj)
+    f.close()
+
 def handle(req):
-    """handle a request to the function
-    Args:
-        req (str): request body
-    """
+    req_dict = json.loads(req)
+    minioBucketName, minioFileName = GetMinioInfos(req_dict)
+
+    data = GetDataFromBucketFile(minioBucketName, minioFileName)
+    ProcessData(data, minioFileName)
 
     return req
