@@ -6,10 +6,11 @@ import json
 import os
 
 OUTBUCKETNAME = 'map1output'
-
+LOCAL_IP = "192.168.1.11"
 
 def SetMC():
-    mc = Minio("192.168.1.11:9000",
+    ipaddress = LOCAL_IP
+    mc = Minio(f"{ipaddress}:9000",
         access_key='minioadmin',
         secret_key='minioadmin',
         secure=False)

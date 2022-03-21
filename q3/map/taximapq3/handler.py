@@ -11,13 +11,10 @@ from datetime import *
 
 
 BUCKETNAME = "map3output"
+LOCAL_IP = "192.168.1.11"
 
-def GetNetworkIp():
-    local_ip="192.168.1.11"
-    return local_ip
-        
 def SetMC():
-    ipaddress = GetNetworkIp()
+    ipaddress = LOCAL_IP
     mc = Minio(f"{ipaddress}:9000",
         access_key='minioadmin',
         secret_key='minioadmin',

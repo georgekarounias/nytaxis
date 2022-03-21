@@ -4,13 +4,15 @@ import json
 import os
 
 OUTBUCKETNAME = 'result1'
+LOCAL_IP = "192.168.1.11"
 countArea1 = 0
 countArea2 = 0
 countArea3 = 0
 countArea4 = 0
 
 def SetMC():
-    mc = Minio("192.168.1.11:9000",
+    ipaddress = LOCAL_IP
+    mc = Minio(f"{ipaddress}:9000",
         access_key='minioadmin',
         secret_key='minioadmin',
         secure=False)
