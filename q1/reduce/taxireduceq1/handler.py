@@ -1,4 +1,3 @@
-from pickle import GLOBAL
 from minio import Minio
 from minio.error import S3Error
 import json
@@ -27,6 +26,7 @@ def GetDataFromBucketFile(minioBucketName, minioFileName):
     mc.fget_object(minioBucketName, minioFileName, "/tmp/" + minioFileName)
     with open("/tmp/" + minioFileName) as json_file:
         data = json.load(json_file)
+    os.remove("/tmp/" + minioFileName)
     return data
 
 def ProcessData(data, minioFileName):
@@ -38,6 +38,7 @@ def ProcessData(data, minioFileName):
     # Serializing json 
     json_object = json.dumps(objects)
     WriteToBucket(json_object, OUTBUCKETNAME, minioFileName)
+    return json_object
 
 def UpdateAreaCounter(area):
     if area == 1:
@@ -69,6 +70,6 @@ def handle(req):
     minioBucketName, minioFileName = GetMinioInfos(req_dict)
 
     data = GetDataFromBucketFile(minioBucketName, minioFileName)
-    ProcessData(data, minioFileName)
+    response = ProcessData(data, minioFileName)
 
-    return req
+    return response

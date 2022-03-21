@@ -5,7 +5,7 @@ import json
 import os
 import socket
 
-JSON_ENTRIES_THRESHOLD = 3 # modify to whatever you see suitable
+JSON_ENTRIES_THRESHOLD = 5 # modify to whatever you see suitable
 def SetMC():
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     s.connect(("8.8.8.8", 80))

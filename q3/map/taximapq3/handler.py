@@ -32,6 +32,7 @@ def GetTrips(inputBucket, file, mc):
     mc.fget_object(inputBucket, file, file)
     with open(file) as json_file:
         data = json.load(json_file)
+    os.remove(file)
     return data
 
 def write_json(obj, filename):
@@ -93,8 +94,10 @@ def handle(req):
 
                 dictionary ={"Id" : i['id'], "Area" : area}
                 routesMettingReqs.append(dictionary)
+    if len(routesMettingReqs) == 0:
+        return
     # Serializing json 
     json_object = json.dumps(routesMettingReqs)
     WriteToBucket(filename, json_object, mc, BUCKETNAME) 
 
-    #return req
+    return  json_object
