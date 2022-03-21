@@ -6,7 +6,7 @@ import os
 import socket
 
 BUCKETNAME = "commoninput"
-JSON_ENTRIES_THRESHOLD = 3 # modify to whatever you see suitable
+JSON_ENTRIES_THRESHOLD = 100 # modify to whatever you see suitable
 def SetMC():
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     s.connect(("8.8.8.8", 80))
@@ -23,7 +23,7 @@ def write_json(json_array, filename):
         json.dump(json_array, jsonf)  # note the usage of .dump directly to a file descriptor
 
 def csv_to_json(csvFilePath, jsonFilePath):
-    mc = SetMC()
+    #mc = SetMC()
     print("Create json start")
     jsonArray = []
     with open(csvFilePath, encoding='utf-8') as csvf: 
@@ -35,14 +35,16 @@ def csv_to_json(csvFilePath, jsonFilePath):
             if len(jsonArray) >= JSON_ENTRIES_THRESHOLD:
                 # if we reached the treshold, write out
                 write_json(jsonArray, f"{jsonFilePath}-{filename_index}.json")
-                mc.fput_object(BUCKETNAME, f"output-{filename_index}.json", f"{jsonFilePath}-{filename_index}.json")
+                #mc.fput_object(BUCKETNAME, f"output-{filename_index}.json", f"{jsonFilePath}-{filename_index}.json")
                 filename_index += 1
                 jsonArray = []
+                os.remove(f"{jsonFilePath}-{filename_index}.json")
         
         
         # Finally, write out the remainder
         write_json(jsonArray, f"{jsonFilePath}-{filename_index}.json")
-        mc.fput_object(BUCKETNAME, f"output-{filename_index}.json", f"{jsonFilePath}-{filename_index}.json")
+        os.remove(f"{jsonFilePath}-{filename_index}.json")
+        #mc.fput_object(BUCKETNAME, f"output-{filename_index}.json", f"{jsonFilePath}-{filename_index}.json")
 
 
-csv_to_json('./_data/sampleData.csv', './_data/output')
+csv_to_json('./_data/fares.csv', './_data/output')
