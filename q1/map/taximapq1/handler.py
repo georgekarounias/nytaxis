@@ -52,7 +52,6 @@ def GetArea(longitude, latitude):
 def WriteToBucket(jsobj, bucketname, minioFileName):
     outputfilename = minioFileName
     write_json(jsobj, "/tmp/" + outputfilename)
-    print(jsobj)
     mc.fput_object(bucketname, outputfilename, "/tmp/" + outputfilename)
     os.remove("/tmp/" + outputfilename)
     return
