@@ -9,20 +9,11 @@ import os
 import geopy.distance
 
 BUCKETNAME = "testbucket"
-
-def GetNetworkIp():
-    # hostname = socket.gethostname()
-    # local_ip = socket.gethostbyname(hostname)
-    # s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    # s.connect(("8.8.8.8", 80))
-    # local_ip = s.getsockname()[0]
-    # s.close()
-    local_ip="192.168.2.11"
-    return local_ip
-        
+LOCAL_IP = "192.168.2.11"
+       
 
 def SetMC():
-    ipaddress = GetNetworkIp()
+    ipaddress = LOCAL_IP
     mc = Minio(f"{ipaddress}:9000",
         access_key='minioadmin',
         secret_key='minioadmin',
