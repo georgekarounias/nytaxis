@@ -1,4 +1,6 @@
-cd q1
+cd preprocess
+./create0.sh
+cd ../q1
 ./create1.sh
 cd ../q2
 ./create2.sh

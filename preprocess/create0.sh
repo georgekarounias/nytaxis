@@ -1,0 +1,1 @@
+faas-cli new --lang python3-debian preprocess

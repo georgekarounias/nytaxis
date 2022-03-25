@@ -1,4 +1,6 @@
-cd q1
+cd preprocess
+./run0.sh
+cd ../q1
 ./run1.sh
 cd ../q2
 ./run2.sh
