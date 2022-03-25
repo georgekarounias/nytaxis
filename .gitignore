@@ -1,3 +1,5 @@
 fares.csv
 _history
 _data/output-*.json
+*.csv
+_data/batches/*.json
