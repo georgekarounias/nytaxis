@@ -6,7 +6,7 @@ import json
 import os
 
 OUTBUCKETNAME = 'map1output'
-LOCAL_IP = "192.168.2.9"
+LOCAL_IP = "192.168.1.14"
 
 def SetMC():
     ipaddress = LOCAL_IP
