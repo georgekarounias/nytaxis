@@ -17,5 +17,6 @@ cd
 ./mc admin config set minio notify_webhook:"taximapq3" queue_limit="1000" endpoint="http://$myIP:8080/function/taximapq3" queue_dir=""
 
 ./mc admin config set minio notify_webhook:"taxireduce3" queue_limit="1000" endpoint="http://$myIP:8080/function/taxireduceq3" queue_dir=""
+
 ./mc admin service restart minio
 

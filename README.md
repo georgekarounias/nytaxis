@@ -1,3 +1,4 @@
+0. Replace LOCAL_IP value in all handlers with your machine's IP (7 handlers)
 1. Create buckets (manually, see BucketNames.txt)
 2. Create Functions
 3. Create Webhooks (with script ./create-webhooks.sh)
