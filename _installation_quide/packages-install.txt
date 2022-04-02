@@ -1,6 +1,0 @@
-we use minio python3 package in our functions requirments.txt
-
-1. Create buckets (manually)
-2. Create Functions
-3. Create Webhooks (with script ./create-webhooks.sh)
-4. Build-Deploy functions (with script ./run.sh)
