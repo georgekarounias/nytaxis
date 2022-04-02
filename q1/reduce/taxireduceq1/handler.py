@@ -52,7 +52,7 @@ def UpdateAreaCounter(area):
     if area == 3:
         global countArea3
         countArea3 = countArea3 + 1
-    else:
+    if area == 4:
         global countArea4
         countArea4 = countArea4 + 1
 
