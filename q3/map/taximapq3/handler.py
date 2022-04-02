@@ -11,7 +11,7 @@ from datetime import *
 
 
 BUCKETNAME = "map3output"
-LOCAL_IP = "192.168.1.11"
+LOCAL_IP = "192.168.2.9"
 
 def SetMC():
     ipaddress = LOCAL_IP

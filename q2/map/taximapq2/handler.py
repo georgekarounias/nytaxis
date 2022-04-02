@@ -9,7 +9,7 @@ import os
 import geopy.distance
 
 BUCKETNAME = "map2output"
-LOCAL_IP = "192.168.42.230"
+LOCAL_IP = "192.168.2.9"
        
 
 def SetMC():
